@@ -1,0 +1,14 @@
+
+*.o
+*.gch
+main
+main-tests
+leak-checker
+results.json
+
+
+*~
+
+.vscode
+
+
