@@ -111,9 +111,7 @@ namespace CPSC131
                 }
 
                 ///	Constructor taking a head, tail, and cursor pointer; YOU'RE WELCOME
-                Iterator(Node<T> *head, Node<T> *tail, Node<T> *cursor) : head_(head), tail_(tail), cursor_(cursor)
-                {
-                }
+                Iterator(Node<T> *head, Node<T> *tail, Node<T> *cursor) : head_(head), tail_(tail), cursor_(cursor) {}
 
                 ///	Get a pointer to the head node, or end() if this list is empty
                 Node<T> *begin() { return head_; }
@@ -280,14 +278,14 @@ namespace CPSC131
                 friend class DoublyLinkedList;
             };
             /// Constructor
-            DoublyLinkedList() {}
+            DoublyLinkedList() : head_(nullptr), tail_(nullptr), size_(0) {}
 
             ///	Copy Constructor
             DoublyLinkedList(DoublyLinkedList &other) : DoublyLinkedList()
             {
-                for (Node<T> *current = other.head_; current != nullptr; current = current->next_)
+                for (auto it = other.begin(); it != other.end(); ++it)
                 {
-                    push_back(current->value());
+                    push_back(*it);
                 }
             }
 
@@ -397,14 +395,9 @@ namespace CPSC131
                 // Loop through each node in the list
                 while (current != nullptr)
                 {
-                    // Move to the next node
-                    current = current->next_;
-
-                    // Delete the previous node
-                    delete head_;
-
-                    // Set the head to the current node
-                    head_ = current;
+                    Node<T> *next = current->next_;
+                    delete current;
+                    current = next;
                 }
                 // Set head and tail pointers to null and reset the size of the list
                 head_ = nullptr;
@@ -445,7 +438,6 @@ namespace CPSC131
                     new_node->next_ = pos->next_;
                     pos->next_ = new_node;
                 }
-                size_++;
                 return Iterator(new_node, head_, tail_);
             }
 
@@ -456,15 +448,15 @@ namespace CPSC131
              * Should return an iterator pointing to the newly created node
              *
              * To reduce repeated code, you may want to simply find
-             * 	an iterator to the node at the pos index, then
-             * 	send it to the other overload of this method.
+             * an iterator to the node at the pos index, then
+             * send it to the other overload of this method.
              */
-            Iterator insert_after(Iterator pos, const T &value)
+            Iterator insert_after(size_t pos, const T &value)
             {
                 Iterator it = begin();
-                for (int i = 0; i < pos && it != end(); i++)
+                for (size_t i = 0; i < pos && it != end(); i++)
                 {
-                    it++;
+                    ++it;
                 }
                 return insert_after(it, value);
             }
@@ -480,16 +472,11 @@ namespace CPSC131
              */
             Iterator erase(Iterator pos)
             {
-                // Creates a new node pointing to the same node as the pos Iterator
                 Node<T> *node = pos.node_;
-
-                // Checks if the node pointer is equal to nullptr or if it points to the head or tail nodes
                 if (node == nullptr || node == head_ || node == tail_)
                 {
                     throw std::range_error("Invalid iterator");
                 }
-
-                // Creates Node pointers prevNode and nextNode that point to the previous and next nodes
                 Node<T> *prevNode = node->prev_;
                 Node<T> *nextNode = node->next_;
 
@@ -502,8 +489,6 @@ namespace CPSC131
                 {
                     head_ = nextNode;
                 }
-
-                // Updates the prev_ pointer of the next node to point to the previous node or updates the tail_ pointer
                 if (nextNode != nullptr)
                 {
                     nextNode->prev_ = prevNode;
@@ -512,14 +497,8 @@ namespace CPSC131
                 {
                     tail_ = prevNode;
                 }
-
-                // Creates a new Iterator object that points to the next node after the one that was erased
                 Iterator nextIt(nextNode, head_, tail_);
-
-                // Deletes the node that node pointer points to
                 delete node;
-
-                // Returns the Iterator object that points to the next node after the one that was erased
                 return nextIt;
             }
             /**
@@ -581,7 +560,7 @@ namespace CPSC131
                 }
                 else
                 {
-                    tail_->next_ = new_node;
+                    tail_ = new_node;
                 }
                 tail_ = new_node;
                 ++size_;
@@ -659,12 +638,16 @@ namespace CPSC131
                 {
                     throw std::range_error("Index out of bounds");
                 }
-                Node<T> *current = head_;
+                Node<T> *temp = head_;
                 for (size_t i = 0; i < index; ++i)
                 {
-                    current = current->next_;
+                    temp = temp->getNext();
+                    if (temp == nullptr)
+                    {
+                        throw std::runtime_error("Invalid node");
+                    }
                 }
-                return current->value_;
+                return temp->getElement();
             }
 
             /**
