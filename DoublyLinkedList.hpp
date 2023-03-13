@@ -540,7 +540,7 @@ namespace CPSC131
                 }
                 else
                 {
-                    head_->prev_ = new_node;
+                    head_->setPrev_(new_node);
                 }
                 head_ = new_node;
                 ++size_;
@@ -610,7 +610,7 @@ namespace CPSC131
                 {
                     throw std::range_error("Empty list");
                 }
-                return head_->value_;
+                return head_->getElement();
             }
 
             /**
