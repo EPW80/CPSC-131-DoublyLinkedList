@@ -32,9 +32,11 @@
 /**
  * Namespace for our classroom !
  */
-namespace CPSC131 {
+namespace CPSC131
+{
     /*** Namespace to hold all things related to our DLL*/
-    namespace DoublyLinkedList {
+    namespace DoublyLinkedList
+    {
         /**
          * Node class, which our DLL will use
          *
@@ -42,7 +44,8 @@ namespace CPSC131 {
          * but he is lazy.
          */
         template <class T>
-        class Node {
+        class Node
+        {
         public:
             /// CTORS
             Node() : prev_(nullptr), next_(nullptr) {}
@@ -88,7 +91,8 @@ namespace CPSC131 {
          * Implement our DoublyLinkedList class !
          */
         template <class T>
-        class DoublyLinkedList {
+        class DoublyLinkedList
+        {
         public:
             /*** Nested Iterator class.
              * This allows user code to refer to the Iterators type as:
@@ -97,15 +101,18 @@ namespace CPSC131 {
              *
              * (as opposed to specifying the template argument two times)
              */
-            class Iterator {
+            class Iterator
+            {
             public:
                 ///	Constructor taking a head and tail pointer; YOU'RE WELCOME
-                Iterator(Node<T> *head, Node<T> *tail) : head_(head), tail_(tail) {
+                Iterator(Node<T> *head, Node<T> *tail) : head_(head), tail_(tail)
+                {
                     cursor_ = end();
                 }
 
                 ///	Constructor taking a head, tail, and cursor pointer; YOU'RE WELCOME
-                Iterator(Node<T> *head, Node<T> *tail, Node<T> *cursor) : head_(head), tail_(tail), cursor_(cursor){
+                Iterator(Node<T> *head, Node<T> *tail, Node<T> *cursor) : head_(head), tail_(tail), cursor_(cursor)
+                {
                 }
 
                 ///	Get a pointer to the head node, or end() if this list is empty
@@ -121,106 +128,129 @@ namespace CPSC131 {
                  * Assignment operator
                  * Return a copy of this Iterator, after modification
                  */
-                Iterator &operator=(const Iterator &other) {
+                Iterator &operator=(const Iterator &other)
+                {
                     head_ = other.head_;
                     tail_ = other.tail_;
                     cursor_ = other.cursor_;
                     return *this;
                 }
-            
+
                 /**
-                * Comparison operator
-                * Returns true if this iterator is equal to the other iterator, false otherwise
-                */
-                bool operator==(const Iterator &other) {
+                 * Comparison operator
+                 * Returns true if this iterator is equal to the other iterator, false otherwise
+                 */
+                bool operator==(const Iterator &other)
+                {
                     return cursor_ == other.cursor_;
                 }
 
                 /**
-                * Inequality comparison operator
-                * Returns true if this iterator is not equal to the other iterator, false otherwise
-                */
-                bool operator!=(const Iterator &other) {
+                 * Inequality comparison operator
+                 * Returns true if this iterator is not equal to the other iterator, false otherwise
+                 */
+                bool operator!=(const Iterator &other)
+                {
                     return !(*this == other);
                 }
                 /**
-                * Prefix increment operator
-                * Return a copy of this Iterator, after modification
-                */
-                Iterator &operator++() {
+                 * Prefix increment operator
+                 * Return a copy of this Iterator, after modification
+                 */
+                Iterator &operator++()
+                {
                     cursor_ = cursor_->getNext();
                     return *this;
                 }
                 /*** Postfix increment
-                * Return a copy of this Iterator, BEFORE it was modified
-                */
-                Iterator operator++(int) {
+                 * Return a copy of this Iterator, BEFORE it was modified
+                 */
+                Iterator operator++(int)
+                {
                     Iterator copy(*this);
                     ++(*this);
                     return copy;
                 }
                 /*** Prefix decrement operator
-                * Return a copy of this Iterator, after modification
-                */
-                Iterator &operator--() {
+                 * Return a copy of this Iterator, after modification
+                 */
+                Iterator &operator--()
+                {
                     cursor_ = cursor_->getPrev();
                     return *this;
                 }
                 /**
-                   * Postfix decrement operator
-                * Return a copy of this Iterator BEFORE it was modified
-                */
-                Iterator operator--(int) {
+                 * Postfix decrement operator
+                 * Return a copy of this Iterator BEFORE it was modified
+                 */
+                Iterator operator--(int)
+                {
                     Iterator copy = *this;
                     --(*this);
                     return copy;
                 }
                 /**
-                * AdditionAssignment operator
-                * Return a copy of the current iterator, after modification
-                */
-                Iterator operator+=(size_t add) {
-                    for (size_t i = 0; i < add && cursor_ != nullptr; ++i) {
+                 * AdditionAssignment operator
+                 * Return a copy of the current iterator, after modification
+                 */
+                Iterator operator+=(size_t add)
+                {
+                    for (size_t i = 0; i < add && cursor_ != nullptr; ++i)
+                    {
                         cursor_ = cursor_->getNext();
                     }
                     return *this;
                 }
                 /**
-                * SubtractionAssignment operator
-                * Return a copy of the current iterator, after modification
-                */
-                Iterator operator-=(size_t sub) {
-                    for (size_t i = 0; i < sub && cursor_ != nullptr; ++i) {
+                 * SubtractionAssignment operator
+                 * Return a copy of the current iterator, after modification
+                 */
+                Iterator operator-=(size_t sub)
+                {
+                    for (size_t i = 0; i < sub && cursor_ != nullptr; ++i)
+                    {
                         cursor_ = cursor_->getPrev();
                     }
                     return *this;
                 }
                 /**
-                * AdditionAssignment operator, supporting positive or negative ints
-                */
-                Iterator operator+=(int add) {
-                    if (add > 0) {
-                        for (int i = 0; i < add && cursor_ != nullptr; ++i) {
+                 * AdditionAssignment operator, supporting positive or negative ints
+                 */
+                Iterator operator+=(int add)
+                {
+                    if (add > 0)
+                    {
+                        for (int i = 0; i < add && cursor_ != nullptr; ++i)
+                        {
                             cursor_ = cursor_->getNext();
                         }
-                    } else {
-                        for (int i = 0; i > add && cursor_->getPrev() != nullptr; --i) {
+                    }
+                    else
+                    {
+                        for (int i = 0; i > add && cursor_->getPrev() != nullptr; --i)
+                        {
                             cursor_ = cursor_->getPrev();
                         }
                     }
                     return *this;
                 }
                 /**
-                * SubtractionAssignment operator, supporting positive or negative ints
-                */
-                Iterator operator-=(int subtract) {
+                 * SubtractionAssignment operator, supporting positive or negative ints
+                 */
+                Iterator operator-=(int subtract)
+                {
                     // This function adds an integer to the current iterators position in the list,
-                    if (subtract > 0) {
-                        for (int i = 0; i < subtract && cursor_->getPrev() != nullptr; ++i) {
+                    if (subtract > 0)
+                    {
+                        for (int i = 0; i < subtract && cursor_->getPrev() != nullptr; ++i)
+                        {
                             cursor_ = cursor_->getPrev();
                         }
-                    } else {
-                        for (int i = 0; i > subtract && cursor_ != nullptr; --i) {
+                    }
+                    else
+                    {
+                        for (int i = 0; i > subtract && cursor_ != nullptr; --i)
+                        {
                             cursor_ = cursor_->getPrev();
                         }
                     }
@@ -228,9 +258,10 @@ namespace CPSC131 {
                 }
 
                 /**
-                * Dereference operator returns a reference to the ELEMENT contained with the current node
-                */
-                T &operator*() {
+                 * Dereference operator returns a reference to the ELEMENT contained with the current node
+                 */
+                T &operator*()
+                {
                     return *cursor_->getElement();
                 }
 
@@ -240,157 +271,177 @@ namespace CPSC131 {
                 /// Pointer to the tail node
                 Node<T> *tail_ = nullptr;
                 /**
-                * Pointer to the cursor node.
-                * This is only one way of letting the iterator traverse the linked list.
-                * You can change to a different method if you wish (and can still pass unit tests)
-                */
+                 * Pointer to the cursor node.
+                 * This is only one way of letting the iterator traverse the linked list.
+                 * You can change to a different method if you wish (and can still pass unit tests)
+                 */
                 Node<T> *cursor_ = nullptr;
-                
+
                 friend class DoublyLinkedList;
-        };
-        /// Constructor
-        DoublyLinkedList() {}
+            };
+            /// Constructor
+            DoublyLinkedList() {}
 
-        ///	Copy Constructor
-        DoublyLinkedList(DoublyLinkedList &other) : DoublyLinkedList() {
-            for (Node<T> *current = other.head_; current != nullptr; current = current->next_) {
-                push_back(current->value());
-            }
-        }
-
-        /// Destructor
-        ~DoublyLinkedList() {
-            clear();
-        }
-
-        /**
-         * Clear the list and assign the same value, count times.
-         * If count was 5, T was int, and value was 3,
-         * 	we'd end up with a list like {3, 3, 3, 3, 3}
-         */
-        void assign(size_t count, const T& value) {
-            clear();
-            for (size_t i = 0; i < count; i++) {
-                push_back(value);
-            }
-        }
-
-
-        /**
-         * Clear the list and assign values from another list.
-         * The 'first' iterator points to the first item copied from the other list.
-         * The 'last' iterator points to the last item copied from the other list.
-         *
-         * Example:
-         * 	Suppose we have a source list like {8, 4, 3, 2, 7, 1}
-         * 	Suppose first points to the 4
-         *	Suppose last points to the 7
-         * 	We should end up with our list becoming: {4, 3, 2, 7}
-         *
-         * If the user code sends out-of-order iterators,
-         * 	just copy from 'first' to the end of the source list
-         * Example: first=7, last=4 from the list above would give us:
-         * 	{7, 1}
-         */
-        void assign(Iterator first, Iterator last) {
-            clear();
-            for (; first != last && first.cursor != nullptr; ++first) {
-                push_back(*first);
-            }
-        }
-
-        /// Return a pointer to the head node, if any
-        Node<T> *head() const { return head_; }
-
-        /// Return a pointer to the tail node, if any
-        Node<T> *tail() const { return tail_; }
-
-        /**
-         * Return an iterator that points to the head of our list
-         */
-        Iterator begin() {
-            return Iterator(head_, head_, tail_);
-        }
-
-        /**
-         * Return an iterator that points to the last element (tail) of our list
-         */
-        Iterator last() {
-            if (empty()) {
-                return Iterator(nullptr, nullptr, nullptr);
-            } else {
-                return Iterator(tail_, nullptr, nullptr);
-            }
-        }
-
-        /**
-         * Should return an iterator that represents being past the end of our nodes,
-         * or just that we are finished.
-         * You can make this a nullptr or use some other scheme of your choosing,
-         * 	as long as it works with the logic of the rest of your implementations.
-         */
-        Iterator end() { return nullptr; }
-
-        /**
-         * Returns true if our list is empty
-         */
-        bool empty() const { return size_ == 0; }
-
-        /**
-         * Returns the current size of the list
-         * Should finish in constant time!
-         * (keep track of the size elsewhere)
-         */
-        size_t size() const { return size_; }
-
-        /**
-         * Clears our entire list, making it empty
-         * Remember: All removal operations should be memory-leak free.
-         */
-        void clear() {
-            // Set a pointer to the head of the list
-            Node<T> *current = head_;
-
-            // Loop through each node in the list
-            while (current != nullptr) {
-                // Move to the next node
-                current = current->next_;
-
-                // Delete the previous node
-                delete head_;
-
-                // Set the head to the current node
-                head_ = current;
-            }
-            // Set head and tail pointers to null and reset the size of the list
-            head_ = nullptr;
-            tail_ = nullptr;
-            size_ = 0;
-        }
-
-        /**
-         * Insert an element after the node pointed to by the pos Iterator
-         *
-         * If the list is currently empty,
-         * 	ignore the iterator and just make the new node at the head/tail (list of length 1).
-         *
-         * If the incoming iterator is this->end(), insert the element at the tail
-         *
-         * Should return an iterator that points to the newly added node
-         *
-         * To avoid repeated code, it might be a good idea to have other methods
-         * 	rely on this one.
-         */
-        Iterator insert_after(Iterator pos, const T &value) {
-            Node<T> *new_node = new Node<T>(value);
-            if (pos == end() || empty()) {
-                if (empty()) {
-                    head_ = new_node;
-                } else {
-                    tail_->next_ = new_node;
+            ///	Copy Constructor
+            DoublyLinkedList(DoublyLinkedList &other) : DoublyLinkedList()
+            {
+                for (Node<T> *current = other.head_; current != nullptr; current = current->next_)
+                {
+                    push_back(current->value());
                 }
-                tail_ = new_node;
-                } else {
+            }
+
+            /// Destructor
+            ~DoublyLinkedList()
+            {
+                clear();
+            }
+
+            /**
+             * Clear the list and assign the same value, count times.
+             * If count was 5, T was int, and value was 3,
+             * 	we'd end up with a list like {3, 3, 3, 3, 3}
+             */
+            void assign(size_t count, const T &value)
+            {
+                clear();
+                for (size_t i = 0; i < count; i++)
+                {
+                    push_back(value);
+                }
+            }
+
+            /**
+             * Clear the list and assign values from another list.
+             * The 'first' iterator points to the first item copied from the other list.
+             * The 'last' iterator points to the last item copied from the other list.
+             *
+             * Example:
+             * 	Suppose we have a source list like {8, 4, 3, 2, 7, 1}
+             * 	Suppose first points to the 4
+             *	Suppose last points to the 7
+             * 	We should end up with our list becoming: {4, 3, 2, 7}
+             *
+             * If the user code sends out-of-order iterators,
+             * 	just copy from 'first' to the end of the source list
+             * Example: first=7, last=4 from the list above would give us:
+             * 	{7, 1}
+             */
+            void assign(Iterator first, Iterator last)
+            {
+                clear();
+                for (; first != last && first.cursor != nullptr; ++first)
+                {
+                    push_back(*first);
+                }
+            }
+
+            /// Return a pointer to the head node, if any
+            Node<T> *head() const { return head_; }
+
+            /// Return a pointer to the tail node, if any
+            Node<T> *tail() const { return tail_; }
+
+            /**
+             * Return an iterator that points to the head of our list
+             */
+            Iterator begin()
+            {
+                return Iterator(head_, head_, tail_);
+            }
+
+            /**
+             * Return an iterator that points to the last element (tail) of our list
+             */
+            Iterator last()
+            {
+                if (empty())
+                {
+                    return Iterator(nullptr, nullptr, nullptr);
+                }
+                else
+                {
+                    return Iterator(tail_, nullptr, nullptr);
+                }
+            }
+
+            /**
+             * Should return an iterator that represents being past the end of our nodes,
+             * or just that we are finished.
+             * You can make this a nullptr or use some other scheme of your choosing,
+             * 	as long as it works with the logic of the rest of your implementations.
+             */
+            Iterator end() { return nullptr; }
+
+            /**
+             * Returns true if our list is empty
+             */
+            bool empty() const { return size_ == 0; }
+
+            /**
+             * Returns the current size of the list
+             * Should finish in constant time!
+             * (keep track of the size elsewhere)
+             */
+            size_t size() const { return size_; }
+
+            /**
+             * Clears our entire list, making it empty
+             * Remember: All removal operations should be memory-leak free.
+             */
+            void clear()
+            {
+                // Set a pointer to the head of the list
+                Node<T> *current = head_;
+
+                // Loop through each node in the list
+                while (current != nullptr)
+                {
+                    // Move to the next node
+                    current = current->next_;
+
+                    // Delete the previous node
+                    delete head_;
+
+                    // Set the head to the current node
+                    head_ = current;
+                }
+                // Set head and tail pointers to null and reset the size of the list
+                head_ = nullptr;
+                tail_ = nullptr;
+                size_ = 0;
+            }
+
+            /**
+             * Insert an element after the node pointed to by the pos Iterator
+             *
+             * If the list is currently empty,
+             * 	ignore the iterator and just make the new node at the head/tail (list of length 1).
+             *
+             * If the incoming iterator is this->end(), insert the element at the tail
+             *
+             * Should return an iterator that points to the newly added node
+             *
+             * To avoid repeated code, it might be a good idea to have other methods
+             * 	rely on this one.
+             */
+            Iterator insert_after(Iterator pos, const T &value)
+            {
+                Node<T> *new_node = new Node<T>(value);
+                if (pos == end() || empty())
+                {
+                    if (empty())
+                    {
+                        head_ = new_node;
+                    }
+                    else
+                    {
+                        tail_->next_ = new_node;
+                    }
+                    tail_ = new_node;
+                }
+                else
+                {
                     new_node->next_ = pos->next_;
                     pos->next_ = new_node;
                 }
@@ -398,294 +449,335 @@ namespace CPSC131 {
                 return Iterator(new_node, head_, tail_);
             }
 
-        /**
-         * Insert a new element after the index pos.
-         * Should work with an empty list.
-         *
-         * Should return an iterator pointing to the newly created node
-         *
-         * To reduce repeated code, you may want to simply find
-         * 	an iterator to the node at the pos index, then
-         * 	send it to the other overload of this method.
-         */
-        Iterator insert_after(Iterator pos, const T &value) {
-           Iterator it = begin();
-           for (int i =0; i < pos && it != end(); i++) {
-               it++;
-            }
-            return insert_after(it, value);
-        }
-
-        /**
-         * Erase the node pointed to by the Iterators cursor.
-         *
-         * If the 'pos' iterator does not point to a valid node,
-         * 	throw an std::range_error
-         *
-         * Return an iterator to the node AFTER the one we erased,
-         * 	or this->end() if we just erased the tail
-         */
-        Iterator erase(Iterator pos) {
-            // Creates a new node pointing to the same node as the pos Iterator
-            Node<T> *node = pos.node_;
-
-            // Checks if the node pointer is equal to nullptr or if it points to the head or tail nodes
-            if (node == nullptr || node == head_ || node == tail_) {
-                throw std::range_error("Invalid iterator");
-            }
-
-            // Creates Node pointers prevNode and nextNode that point to the previous and next nodes
-            Node<T> *prevNode = node->prev_;
-            Node<T> *nextNode = node->next_;
-
-            // Updates the next_ pointer of the previous node to point to the next node or updates the head_ pointer
-            if (prevNode != nullptr) {
-                prevNode->next_ = nextNode;
-            } else {
-                head_ = nextNode;
-            }
-
-            // Updates the prev_ pointer of the next node to point to the previous node or updates the tail_ pointer
-            if (nextNode != nullptr) {
-                nextNode->prev_ = prevNode;
-            } else {
-                tail_ = prevNode;
-            }
-
-            // Creates a new Iterator object that points to the next node after the one that was erased
-            Iterator nextIt(nextNode, head_, tail_);
-
-            // Deletes the node that node pointer points to
-            delete node;
-
-            // Returns the Iterator object that points to the next node after the one that was erased
-            return nextIt;
-        }
-        /**
-         * Add an element just after the one pointed to by the 'pos' iterator
-         *
-         * Should return an iterator pointing to the newly created node
-         */
-        Iterator push_after(Iterator pos, const T &value) {
-            Node<T> *node = pos.node_;
-            if (node == nullptr) {
-                throw std::range_error("Invalid iterator");
-            }
-
-            Node<T> *nextNode = node->next_;
-            Node<T> *newNode = new Node(value, node, nextNode);
-            node->next_ = newNode;
-            if (nextNode != nullptr) {
-                nextNode->prev_ = newNode;
-            } else {
-                tail_ = newNode;
-            }
-            return Iterator(newNode, head_, tail_);
-        }
-
-        /**
-         * Add a new element to the front of our list.
-         */
-        void push_front(const T &value) {
-            Node<T> *new_node = new Node<T>(value, nullptr, head_);
-            if (head_ == nullptr) {
-                tail_ = new_node;
-            } else {
-                head_->prev_ = new_node;
-            }
-            head_ = new_node;
-            ++size_;
-        }
-
-        /**
-         * Add an element to the end of this list.
-         *
-         * Should return an iterator pointing to the newly created node.
-         */
-        Iterator push_back(const T &value) {
-            Node<T> *new_node = new Node<T>(value, nullptr, tail_);
-            if (tail_ == nullptr) {
-                head_ = new_node;
-            } else {
-                tail_->next_ = new_node;
-            }
-            tail_ = new_node;
-            ++size_;
-            return Iterator(new_node, head_, tail_);
-        }
-
-        /**
-         * Remove the node at the front of our list
-         *
-         * Should throw an exception if our list is empty
-         */
-        void pop_front() {
-            if (head_ == nullptr) {
-                throw std::range_error("Empty list");
-            }
-            Node *temp = head_;
-            head_ = head->next_;
-            delete temp;
-        }
-
-        /**
-         * Remove the node at the end of our list
-         *
-         * Should throw an exception if our list is empty
-         */
-        void pop_back() {
-            if (tail_ == nullptr) {
-                throw std::range_error("Empty list");
-            }
-            Node *temp = tail_;
-            tail_ = tail_->prev_;
-            delete temp;
-        }
-
-        /**
-         * Return a reference to the element at the front.
-         *
-         * Throw an exception if the list is empty
-         */
-        T &front() {
-            if (head_ == nullptr) {
-                throw std::range_error("Empty list");
-            }
-            return head_->value_;
-        }
-
-        /**
-         * Return a reference to the element at the back.
-         *
-         * Throw an exception if the list is empty
-         */
-        T &back() {
-            if (tail_ == nullptr) {
-                throw std::range_error("Empty list");
-            }
-            return tail_->value_;
-        }
-
-        /**
-         * Return the element at an index
-         *
-         * Should throw a range_error is out of bounds
-         */
-        T &at(size_t index) {
-            if (index >= size_) {
-                throw std::range_error("Index out of bounds");
-            }
-            Node<T> *current = head_;
-            for (size_t i = 0; i < index; ++i) {
-                current = current->next_;
-            }
-            return current->value_;
-        }
-
-        /**
-         * Reverse the current list
-         *
-         * It might be easy to consider the following:
-         * - Create a temp empty list
-         * - Iterate through the current list
-         * - For each item in the current list, push to the FRONT (not back)
-         * - Assign the current list to the temp list
-         * - Discard the temp list
-         */
-        void reverse() {
-            Node<T> *current = head_;
-            Node<T> *temp = nullptr;
-            while (current != nullptr) {
-                temp = current->prev_;
-                current->prev_ = current->next_;
-                current->next_ = temp;
-                current = current->prev_;
-            }
-           temp = head_;
-           head_ = tail_;
-           tail_ = temp;
-        }
-
-        /**
-         * I bet you're happy I'm not making you do this.
-         * No tests will be run against this function,
-         * 	but feel free to try it out, as a challenge!
-         *
-         * If I were doing this and didn't care too much for efficiency,
-         * 	I would probably create an extra helper function to swap two
-         * 	positions in the current list.
-         * Then I would simply sweep through the list and perform
-         *  the bubble-sort algorithm. Perhaps selection sort.
-         *
-         * If you want a huge challenge, try implementing quicksort.
-         *
-         * (but again, don't worry about this method; it will not be tested)
-         */
-        void sort() {
-
-        }
-
-        /**
-         * Assignment operator
-         *
-         * Clear this list and fill it with the others' values
-         * (by value, not by reference)
-         *
-         * Return a reference to this list
-         */
-        DoublyLinkedList<T> &operator=(DoublyLinkedList<T> &other) {
-            if (this != &other) {
-                clear();
-                for (Node<T> *node = other.head_; node != nullptr; node = node->next_) {
-                    push_back(node->value_);
+            /**
+             * Insert a new element after the index pos.
+             * Should work with an empty list.
+             *
+             * Should return an iterator pointing to the newly created node
+             *
+             * To reduce repeated code, you may want to simply find
+             * 	an iterator to the node at the pos index, then
+             * 	send it to the other overload of this method.
+             */
+            Iterator insert_after(Iterator pos, const T &value)
+            {
+                Iterator it = begin();
+                for (int i = 0; i < pos && it != end(); i++)
+                {
+                    it++;
                 }
+                return insert_after(it, value);
             }
-            return *this;
-        }
 
-        /**
-         * Return true if the lists are "equal"
-         *
-         * "Equal" here is defined as:
-         * - Same size
-         * - Elements at the same indexes would return true for their own comparison operators
-         *
-         * In other words: "They contain all the same values"
-         * (no need to be references to each other)
-         */
-        bool operator==(DoublyLinkedList<T> &other) {
-            if (size() != other.size()) {
-                return false;
+            /**
+             * Erase the node pointed to by the Iterators cursor.
+             *
+             * If the 'pos' iterator does not point to a valid node,
+             * 	throw an std::range_error
+             *
+             * Return an iterator to the node AFTER the one we erased,
+             * 	or this->end() if we just erased the tail
+             */
+            Iterator erase(Iterator pos)
+            {
+                // Creates a new node pointing to the same node as the pos Iterator
+                Node<T> *node = pos.node_;
+
+                // Checks if the node pointer is equal to nullptr or if it points to the head or tail nodes
+                if (node == nullptr || node == head_ || node == tail_)
+                {
+                    throw std::range_error("Invalid iterator");
+                }
+
+                // Creates Node pointers prevNode and nextNode that point to the previous and next nodes
+                Node<T> *prevNode = node->prev_;
+                Node<T> *nextNode = node->next_;
+
+                // Updates the next_ pointer of the previous node to point to the next node or updates the head_ pointer
+                if (prevNode != nullptr)
+                {
+                    prevNode->next_ = nextNode;
+                }
+                else
+                {
+                    head_ = nextNode;
+                }
+
+                // Updates the prev_ pointer of the next node to point to the previous node or updates the tail_ pointer
+                if (nextNode != nullptr)
+                {
+                    nextNode->prev_ = prevNode;
+                }
+                else
+                {
+                    tail_ = prevNode;
+                }
+
+                // Creates a new Iterator object that points to the next node after the one that was erased
+                Iterator nextIt(nextNode, head_, tail_);
+
+                // Deletes the node that node pointer points to
+                delete node;
+
+                // Returns the Iterator object that points to the next node after the one that was erased
+                return nextIt;
             }
-            auto it1 = begin();
-            auto it2 = other.begin();
-            for (; it1 != end() && it2 != other.end(); ++it1, ++it2) {
-                if (*it1 != *it2) {
+            /**
+             * Add an element just after the one pointed to by the 'pos' iterator
+             *
+             * Should return an iterator pointing to the newly created node
+             */
+            Iterator push_after(Iterator pos, const T &value)
+            {
+                Node<T> *node = pos.node_;
+                if (node == nullptr)
+                {
+                    throw std::range_error("Invalid iterator");
+                }
+
+                Node<T> *nextNode = node->next_;
+                Node<T> *newNode = new Node(value, node, nextNode);
+                node->next_ = newNode;
+                if (nextNode != nullptr)
+                {
+                    nextNode->prev_ = newNode;
+                }
+                else
+                {
+                    tail_ = newNode;
+                }
+                return Iterator(newNode, head_, tail_);
+            }
+
+            /**
+             * Add a new element to the front of our list.
+             */
+            void push_front(const T &value)
+            {
+                Node<T> *new_node = new Node<T>(value, nullptr, head_);
+                if (head_ == nullptr)
+                {
+                    tail_ = new_node;
+                }
+                else
+                {
+                    head_->prev_ = new_node;
+                }
+                head_ = new_node;
+                ++size_;
+            }
+
+            /**
+             * Add an element to the end of this list.
+             *
+             * Should return an iterator pointing to the newly created node.
+             */
+            Iterator push_back(const T &value)
+            {
+                Node<T> *new_node = new Node<T>(value, nullptr, tail_);
+                if (tail_ == nullptr)
+                {
+                    head_ = new_node;
+                }
+                else
+                {
+                    tail_->next_ = new_node;
+                }
+                tail_ = new_node;
+                ++size_;
+                return Iterator(new_node, head_, tail_);
+            }
+
+            /**
+             * Remove the node at the front of our list
+             *
+             * Should throw an exception if our list is empty
+             */
+            void pop_front()
+            {
+                if (head_ == nullptr)
+                {
+                    throw std::range_error("Empty list");
+                }
+                Node<T> *temp = head_;
+                head_ = head->next_;
+                delete temp;
+            }
+
+            /**
+             * Remove the node at the end of our list
+             *
+             * Should throw an exception if our list is empty
+             */
+            void pop_back()
+            {
+                if (tail_ == nullptr)
+                {
+                    throw std::range_error("Empty list");
+                }
+                Node<T> *temp = tail_;
+                tail_ = tail_->prev_;
+                delete temp;
+            }
+
+            /**
+             * Return a reference to the element at the front.
+             *
+             * Throw an exception if the list is empty
+             */
+            T &front()
+            {
+                if (head_ == nullptr)
+                {
+                    throw std::range_error("Empty list");
+                }
+                return head_->value_;
+            }
+
+            /**
+             * Return a reference to the element at the back.
+             *
+             * Throw an exception if the list is empty
+             */
+            T &back()
+            {
+                if (tail_ == nullptr)
+                {
+                    throw std::range_error("Empty list");
+                }
+                return tail_->value_;
+            }
+
+            /**
+             * Return the element at an index
+             *
+             * Should throw a range_error is out of bounds
+             */
+            T &at(size_t index)
+            {
+                if (index >= size_)
+                {
+                    throw std::range_error("Index out of bounds");
+                }
+                Node<T> *current = head_;
+                for (size_t i = 0; i < index; ++i)
+                {
+                    current = current->next_;
+                }
+                return current->value_;
+            }
+
+            /**
+             * Reverse the current list
+             *
+             * It might be easy to consider the following:
+             * - Create a temp empty list
+             * - Iterate through the current list
+             * - For each item in the current list, push to the FRONT (not back)
+             * - Assign the current list to the temp list
+             * - Discard the temp list
+             */
+            void reverse()
+            {
+                Node<T> *current = head_;
+                Node<T> *temp = nullptr;
+                while (current != nullptr)
+                {
+                    temp = current->prev_;
+                    current->prev_ = current->next_;
+                    current->next_ = temp;
+                    current = current->prev_;
+                }
+                temp = head_;
+                head_ = tail_;
+                tail_ = temp;
+            }
+
+            /**
+             * I bet you're happy I'm not making you do this.
+             * No tests will be run against this function,
+             * 	but feel free to try it out, as a challenge!
+             *
+             * If I were doing this and didn't care too much for efficiency,
+             * 	I would probably create an extra helper function to swap two
+             * 	positions in the current list.
+             * Then I would simply sweep through the list and perform
+             *  the bubble-sort algorithm. Perhaps selection sort.
+             *
+             * If you want a huge challenge, try implementing quicksort.
+             *
+             * (but again, don't worry about this method; it will not be tested)
+             */
+            void sort()
+            {
+            }
+
+            /**
+             * Assignment operator
+             *
+             * Clear this list and fill it with the others' values
+             * (by value, not by reference)
+             *
+             * Return a reference to this list
+             */
+            DoublyLinkedList<T> &operator=(DoublyLinkedList<T> &other)
+            {
+                if (this != &other)
+                {
+                    clear();
+                    for (Node<T> *node = other.head_; node != nullptr; node = node->next_)
+                    {
+                        push_back(node->value_);
+                    }
+                }
+                return *this;
+            }
+
+            /**
+             * Return true if the lists are "equal"
+             *
+             * "Equal" here is defined as:
+             * - Same size
+             * - Elements at the same indexes would return true for their own comparison operators
+             *
+             * In other words: "They contain all the same values"
+             * (no need to be references to each other)
+             */
+            bool operator==(DoublyLinkedList<T> &other)
+            {
+                if (size() != other.size())
+                {
                     return false;
                 }
+                auto it1 = begin();
+                auto it2 = other.begin();
+                for (; it1 != end() && it2 != other.end(); ++it1, ++it2)
+                {
+                    if (*it1 != *it2)
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
-            return true;
-        }
 
-        /**
-         * Return true if the lists are "not equal"
-         *
-         * See the operator== stub for definition of "equal"
-         *
-         * Probably want to avoid repeated code by relying on the other operator
-         */
-        bool operator!=(DoublyLinkedList<T> &other) {
-            return !(*this == other);
-        }
+            /**
+             * Return true if the lists are "not equal"
+             *
+             * See the operator== stub for definition of "equal"
+             *
+             * Probably want to avoid repeated code by relying on the other operator
+             */
+            bool operator!=(DoublyLinkedList<T> &other)
+            {
+                return !(*this == other);
+            }
 
-    private:
-        Node<T> *head_ = nullptr;
-        Node<T> *tail_ = nullptr;
-        size_t size_ = 0;
-    
-
-
-    };
+        private:
+            Node<T> *head_ = nullptr;
+            Node<T> *tail_ = nullptr;
+            size_t size_ = 0;
+        };
+    }
 }
-
 #endif

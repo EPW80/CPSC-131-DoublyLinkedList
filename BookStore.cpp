@@ -30,7 +30,6 @@ namespace CPSC131::BookStore
      */
     void BookStore::adjustAccountBalance(int adjustment)
     {
-
         accountBalance += adjustment;
     }
 
