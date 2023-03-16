@@ -1,9 +1,10 @@
 # Project 2 - DoublyLinkedList
 
-My submission for Computer Science CPSC 131 Data Structures, Section 02, Project 2
+1. Implement a custom doubly linked list class named `DoublyLinkedList`
+
+2. Implement a wrapper class (aka an adapter) named `BookStore` that allows user code to interact directly with a simulation of a bookstore, while avoiding direct interaction with an actual `DoublyLinkedList`.
 
 # My Information
 
-* Name: Erik Williams
-* CWID: 885460337
-* Email: epwilliams@csu.fullerton.edu
+- Name: Erik Williams
+- Email: epwilliams@csu.fullerton.edu
