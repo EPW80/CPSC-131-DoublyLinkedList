@@ -1,4 +1,4 @@
-# Project 2 - DoublyLinkedList
+# DoublyLinkedList
 
 A custom doubly linked list class named `DoublyLinkedList`
 
