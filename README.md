@@ -40,6 +40,10 @@ Execute the program defined by main.cpp:
 make run
 ```
 
+## Demo
+
+![](./demo.gif)
+
 ## Contributor
 
 Erik Williams
